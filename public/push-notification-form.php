@@ -30,36 +30,36 @@ if(!empty($admin)){
 
             <div class="item">
 
-                <?php if($message) echo $message->format(); ?>
-                    <div class="item-content">
-                        <input type="hidden" name="id" value="<?php echo $push_notification->id; ?>">
-                        <input type="hidden" name="admin_id" value="<?php echo $push_notification->admin_id; ?>">
-                        <input type="hidden" name="notify-image" value="<?php echo $push_notification->img; ?>"/>
-
-                        <label class="control-label" for="file">Primary Image(<?php echo "Max Image Size : " . MAX_IMAGE_SIZE . "MB. Required Format : png/jpg/jpeg"; ?>)</label>
-
-                        <div class="image-upload">
-
-                            <img src="<?php if(!empty($push_notification->image_name))
-                                echo UPLOADED_FOLDER . DIRECTORY_SEPARATOR . $push_notification->img; ?>" alt="" class="uploaded-image"/>
-
-                            <div class="h-100" class="upload-content">
-                                <div class="dplay-tbl">
-                                    <div class="dplay-tbl-cell">
-                                        <i class="ion-ios-cloud-upload"></i>
-                                        <h5><b>Choose Your Image to Upload</b></h5>
-                                        <h6 class="mt-10 mb-70">Or Drop Your Image Here</h6>
-                                    </div>
-                                </div>
-                            </div><!--upload-content-->
-                            <input data-required="image" type="file" name="notify-image" class="image-input"
-                                    data-traget-resolution="image_resolution" value="<?php echo $push_notification->img; ?>"/>
-                            <input type="hidden" name="image_resolution" value="<?php echo $push_notification->image_resolution; ?>"/>
-                        </div>
 
                     <div class="item-content">
+
                         <form data-validation="true" action="../private/controllers/push_notification.php"
                               method="post" enctype="multipart/form-data">
+                            <?php if($message) echo $message->format(); ?>
+                                <div class="item-content">
+                                    <input type="hidden" name="id" value="<?php echo $push_notification->id; ?>">
+                                    <input type="hidden" name="admin_id" value="<?php echo $push_notification->admin_id; ?>">
+                                    <input type="hidden" name="prev_img" value="<?php echo $push_notification->img; ?>"/>
+
+                                    <label class="control-label" for="file">Primary Image(<?php echo "Max Image Size : " . MAX_IMAGE_SIZE . "MB. Required Format : png/jpg/jpeg"; ?>)</label>
+
+                                    <div class="image-upload">
+
+                                        <img src="<?php echo UPLOADED_FOLDER . DIRECTORY_SEPARATOR . $push_notification->img; ?>" alt="" class="uploaded-image"/>
+
+                                        <div class="h-100" class="upload-content">
+                                            <div class="dplay-tbl">
+                                                <div class="dplay-tbl-cell">
+                                                    <i class="ion-ios-cloud-upload"></i>
+                                                    <h5><b>Choose Your Image to Upload</b></h5>
+                                                    <h6 class="mt-10 mb-70">Or Drop Your Image Here</h6>
+                                                </div>
+                                            </div>
+                                        </div><!--upload-content-->
+                                        <input data-required="image" type="file" name="notify-image" class="image-input"
+                                                data-traget-resolution="image_resolution" value="<?php echo $push_notification->img; ?>"/>
+                                        <input type="hidden" name="image_resolution" value=""/>
+                                    </div>
 
                             <input type="hidden" name="id" value="<?php echo $push_notification->id; ?>"/>
                             <input type="hidden" name="admin_id" value="<?php echo $push_notification->admin_id; ?>"/>

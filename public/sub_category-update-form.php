@@ -7,6 +7,10 @@ $message = Session::get_temp_session(new Message());
 $admin = Session::get_session(new Admin());
 $deletable_image_ids = "";
 
+$sub_id = $_GET["sub_id"];
+$sub_name = $_GET["sub_name"];
+$parent_id = $_GET["par_id"];
+
 if(!empty($admin)){
 
     $category = new Category();
@@ -39,29 +43,19 @@ if(!empty($admin)){
             <div class="item">
                 <?php if($message) echo $message->format(); ?>
 
-                <form data-validation="true" action="../public/sub_cat.php" method="post" enctype="multipart/form-data">
+                <form data-validation="true" action="../public/update_subcat.php" method="post" enctype="multipart/form-data">
                     <div class="item-inner">
 
                         <div class="item-header">
                             <h5 class="dplay-inl-b">Sub_Category</h5>
 
-                            <h5 class="float-r oflow-hidden">
-                                <label class="status switch">
-                                    <input type="checkbox" name="status"
-                                        <?php if($category->status == 1) echo "checked"; ?>/>
-                                    <span class="slider round">
-                                        <b class="active">Active</b>
-                                        <b class="inactive">Inactive</b>
-                                    </span>
-                                </label>
-                                <span class="toggle-title"></span>
-                            </h5>
                         </div><!--item-header-->
 
                         <div class="item-content">
 
                             <label>Title</label>
-                            <input type="text" data-required="true" placeholder="Site Title" name="title" value="<?php echo $category->title; ?>"/>
+                            <input type="hidden" value="<?php echo $sub_id ?>" name="sub_id">
+                            <input type="text" data-required="true" value="<?php echo $sub_name?>"placeholder="Site Title" name="title" value="<?php echo $category->title; ?>"/>
                             
                             <label>Parent category </label>
                             <?php if($all_categories > 0){ ?>
@@ -89,14 +83,8 @@ if(!empty($admin)){
     </div><!--main-content-->
 </div><!--main-container-->
 
-<?php echo "<script>maxUploadedFile = '" . MAX_IMAGE_SIZE  . "'</script>"; ?>
-<?php echo "<script>maxUploadedFileCount = '" . MAX_FILE_COUNT  . "'</script>"; ?>
-<?php echo "<script>adminId = '" . $admin->id  . "'</script>"; ?>
 
 
 <?php require("common/php/php-footer.php"); ?>
 
 </body>
-<!-- 
-    change redirection of sub-cat.php to sub-category 
- -->

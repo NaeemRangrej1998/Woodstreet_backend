@@ -24,7 +24,25 @@ if(!empty($admin)){
 
     $start = ($page - 1) * BACKEND_PAGINATION;
     $all_categories = $all_categories->where(["admin_id" => $admin->id])->orderBy("id")->desc()->limit($start, BACKEND_PAGINATION)->all();
+    function get_subcategory(){
+        $ser_name="localhost";
+        $u_name="root";
+        $ps="";
+        $db = "admin_db";
 
+        $conn = new mysqli($ser_name, $u_name, $ps,$db);
+        if($conn -> connect_error){
+            die("Connection Rejected ".$conn -> connect_error );
+        }
+
+        $query = "SELECT Sub_id,sub_name, id,title FROM sub_category INNER JOIN category on parent_id = id ";
+        $result = $conn->query($query);
+
+        if ($result->num_rows > 0) {
+            return $result;
+        } 
+    }
+    $all_sub_cat = get_subcategory();
 }else Helper::redirect_to("login.php");
 
 ?>
@@ -53,34 +71,34 @@ if(!empty($admin)){
             <div class="item-wrapper">
                 <div class="masonry-grid four">
 
-                    <?php if(count($all_categories) > 0){
-                        foreach ($all_categories as $item){ ?>
+                    <?php if(count($all_sub_cat) > 0){
+                        foreach ($all_sub_cat as $item){ ?>
 
                             <div class="masonry-item">
                                 <div class="item">
 
                                     <div class="item-inner">
 
-                                        <div class="video-header">
+                                        <!-- <div class="video-header">
                                             <h6 class="all-status video-status"><?php
-                                                if($item->status == 1) echo "<span class='active'>Active</span>";
-                                                else echo "<span class='inactive'>Inactive</span>"; ?>
+                                                // if($item->status == 1) echo "<span class='active'>Active</span>";
+                                                // else echo "<span class='inactive'>Inactive</span>"; ?>
                                             </h6>
-                                        </div>
+                                        </div> -->
 
                                         <div class="p-25">
                                             <div class="two-sided-80">
-                                                <div class="left">
-                                                    <img src="<?php echo UPLOADED_FOLDER . DIRECTORY_SEPARATOR . $item->image_name; ?>" alt="image"/>
+                                                <div class="center">
+                                                    <h4 class=""><?php echo $item["sub_name"]; ?></h4>
                                                 </div>
                                                 <div class="right">
-                                                    <p class=""><?php echo $item->title; ?></p>
+                                                    <h4 class=""><?php echo $item["title"]; ?></h4>
                                                 </div>
                                             </div><!--$item-->
                                         </div><!--item-inner-->
 
                                         <div class="item-footer two">
-                                            <a href="<?php echo 'Sub_category-form.php?id=' . $item->id; ?>"><i class="ion-compose"></i></a>
+                                            <a href="<?php echo 'sub_category-update-form.php?sub_id=' . $item["Sub_id"] . "&sub_name=".$item["sub_name"] . "&par_id=".$item["id"] ?>"><i class="ion-compose"></i></a>
                                             <a data-confirm = "Are you sure?" href="<?php echo '../private/controllers/Sub_category.php?id=' . $item->id . '&&admin_id=' . $item->admin_id; ?>">
                                                 <i class="ion-trash-a"></i></a>
                                         </div><!--item-footer-->

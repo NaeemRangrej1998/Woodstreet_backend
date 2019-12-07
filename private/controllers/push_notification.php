@@ -43,7 +43,9 @@ if(empty($admin)){
                     $upload = new Upload($_FILES["notify-image"]);
                     $upload->set_max_size(MAX_IMAGE_SIZE);
                     if($upload->upload()) {
-                        $push_notification->notify->imag = $upload->get_file_name();
+                        $push_notification->img = $upload->get_file_name();
+                        // echo "Ha bhai";
+                        
                         // $category->image_resolution = $upload->resolution;
                     }
                     $errors = $upload->get_errors();

@@ -63,6 +63,7 @@ if(!empty($admin)){
 
                             <div class="image-upload">
 
+
                                 <img src="<?php if(!empty($category->image_name))
                                     echo UPLOADED_FOLDER . DIRECTORY_SEPARATOR . $category->image_name; ?>" alt="" class="uploaded-image"/>
 
