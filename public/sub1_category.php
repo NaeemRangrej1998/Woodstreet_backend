@@ -99,7 +99,8 @@ if(!empty($admin)){
 
                                         <div class="item-footer two">
                                             <a href="<?php echo 'sub_category-update-form.php?sub_id=' . $item["Sub_id"] . "&sub_name=".$item["sub_name"] . "&par_id=".$item["id"] ?>"><i class="ion-compose"></i></a>
-                                            <a data-confirm = "Are you sure?" href="<?php echo '../private/controllers/Sub_category.php?id=' . $item->id . '&&admin_id=' . $item->admin_id; ?>">
+                                            <a data-confirm = "Are you sure?" href="<?php echo 'delete_subcat.php?del_id=' . $item["Sub_id"] ?>">
+                                               <!--  -->
                                                 <i class="ion-trash-a"></i></a>
                                         </div><!--item-footer-->
 
