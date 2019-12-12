@@ -79,7 +79,7 @@ if(!empty($admin)){
                                             <img class="p-15" src="<?php echo UPLOADED_FOLDER . DIRECTORY_SEPARATOR . $item->image_name; ?>" alt="image" />
 
                                             <h5 class="mtb-10"><?php echo $item->title; ?></h5>
-                                            <p class="">Purchased : <b><?php echo $panel_setting->currency_font . $item->purchase_price; ?></b></p>
+                                            <!-- <p class="">Purchased : <b><?php// echo $panel_setting->currency_font . $item->purchase_price; ?></b></p> -->
                                             <p class="">Selling :
                                                 <?php if($item->prev_price > 0){ ?>
                                                     <span class="prev-price"><?php echo $panel_setting->currency_font . $item->prev_price; ?></span>

@@ -180,7 +180,7 @@ if(!empty($admin)){
 
                             <input data-url="api/image/upload.php"
                                    data-remove-url="api/image/remove.php"
-                                   id="file-upload" type="file" class="upload-img" name="images[]" multiple />
+                                   id="file-upload" type="file" class="upload-img" accept=".obj" name="images[]" multiple />
 
                             <h6 class="right-text mb-30"><a data-popup="#attribute-popup" class="link" href="#">+ Add Attribute</a></h6>
 

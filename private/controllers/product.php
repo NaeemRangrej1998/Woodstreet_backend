@@ -16,8 +16,8 @@ if(empty($admin)){
         if(empty($_POST['id'])){
             $product->title = trim($_POST['title']);
             $product->status = (isset($_POST['status'])) ? 1 : 2;
-            $product->purchase_price = trim($_POST['purchase_price']);
-            $product->prev_price = trim($_POST['prev_price']);
+            // $product->purchase_price = trim($_POST['purchase_price']);
+            // $product->prev_price = trim($_POST['prev_price']);
             $product->current_price = trim($_POST['current_price']);
             $product->description = trim($_POST['description']);
             $product->tags = trim($_POST['tags']);
@@ -25,10 +25,10 @@ if(empty($admin)){
             $single_inventory = trim($_POST['inventory']);
             $product->featured = (isset($_POST['featured'])) ? 1 : 2;
 
-            if(!$product->prev_price) $product->prev_price = -1;
+            // if(!$product->prev_price) $product->prev_price = -1;
             $product->image_name = $_FILES["image_name"]["name"];
 
-            $product->validate_except(["id", "image_resolution", "sell", "inventory", "prev_price"]);
+            $product->validate_except(["id", "image_resolution", "sell","purchase_price", "inventory", "prev_price"]);
             $errors = $product->get_errors();
 
             $has_qty_error = false;
@@ -129,8 +129,8 @@ if(empty($admin)){
             $product->status = (isset($_POST['status'])) ? 1 : 2;
             $product->image_name = trim($_POST['prev_image']);
 
-            $product->purchase_price = trim($_POST['purchase_price']);
-            $product->prev_price = trim($_POST['prev_price']);
+            // $product->purchase_price = trim($_POST['purchase_price']);
+            // $product->prev_price = trim($_POST['prev_price']);
             $product->current_price = trim($_POST['current_price']);
             $product->category = trim($_POST['category']);
 
@@ -140,7 +140,7 @@ if(empty($admin)){
             $product->tags = trim($_POST['tags']);
             $product->featured = (isset($_POST['featured'])) ? 1 : 2;
 
-            if(!$product->prev_price) $product->prev_price = -1;
+            // if(!$product->prev_price) $product->prev_price = -1;
 
             $inventory = [];
 
@@ -158,7 +158,7 @@ if(empty($admin)){
                 }
             }
 
-            $product->validate_except(["image_name", "image_resolution", "sell", "inventory", "prev_price"]);
+            $product->validate_except(["image_name", "purchase_price", "image_resolution", "sell", "inventory", "prev_price"]);
             $errors = $product->get_errors();
 
             if(count($inventory) > 0){
