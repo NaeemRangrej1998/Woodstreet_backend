@@ -44,7 +44,25 @@ if(!empty($admin)){
             $images_from_db = $image_from_db->where(["item_id"=>$product->id])->all();
         }
     }
+     function get_subcategory(){
+        $ser_name="localhost";
+        $u_name="root";
+        $ps="";
+        $db = "admin_db";
 
+        $conn = new mysqli($ser_name, $u_name, $ps,$db);
+        if($conn -> connect_error){
+            die("Connection Rejected ".$conn -> connect_error );
+        }
+
+        $query = "SELECT Sub_id,sub_name, id,title FROM sub_category INNER JOIN category on parent_id = id ";
+        $result = $conn->query($query);
+
+        if ($result->num_rows > 0) {
+            return $result;
+        } 
+    }
+    $all_sub_cat = get_subcategory();
 
 }else Helper::redirect_to("login.php");
 
@@ -133,6 +151,14 @@ if(!empty($admin)){
                                     <?php }?>
                                 </select>
                             <?php  } ?>
+                            <?php //if($all_sub_cat > 0){ ?>
+                                <select name="category" data-required="dropdown">
+                                    <option selected="true" disabled="disabled">Please select a category</option>
+                                    <?php foreach($all_sub_cat as $item){ ?>
+                                        <option value="<?php echo $item["Sub_id"]; ?>" ><?php echo $item["sub_name"]; ?></option>
+                                    <?php }?>
+                                </select>
+                            <?php  //} ?>
 
                             
                             <h5 class="mt-10 mb-30 oflow-hidden">

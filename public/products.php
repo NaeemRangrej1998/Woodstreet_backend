@@ -23,10 +23,30 @@ if(!empty($admin)){
 
     $start = ($page - 1) * BACKEND_PAGINATION;
     $all_products = $all_products->where(["admin_id" => $admin->id])->orderBy("id")->desc()->limit($start, BACKEND_PAGINATION)->all();
+    $all_categories = new Category();
+    $all_categories = $all_categories->where(["status"=>1])->all();
 
     $panel_setting = new Setting();
     $panel_setting = $panel_setting->where(["admin_id"=> $admin->id])->one();
+    function get_subcategory(){
+        $ser_name="localhost";
+        $u_name="root";
+        $ps="";
+        $db = "admin_db";
 
+        $conn = new mysqli($ser_name, $u_name, $ps,$db);
+        if($conn -> connect_error){
+            die("Connection Rejected ".$conn -> connect_error );
+        }
+
+        $query = "SELECT Sub_id,sub_name, id,title FROM sub_category INNER JOIN category on parent_id = id ";
+        $result = $conn->query($query);
+
+        if ($result->num_rows > 0) {
+            return $result;
+        } 
+    }
+    $all_sub_cat = get_subcategory();
 }else Helper::redirect_to("login.php");
 
 ?>
@@ -78,8 +98,17 @@ if(!empty($admin)){
 
                                             <img class="p-15" src="<?php echo UPLOADED_FOLDER . DIRECTORY_SEPARATOR . $item->image_name; ?>" alt="image" />
 
-                                            <h5 class="mtb-10"><?php echo $item->title; ?></h5>
-                                            <!-- <p class="">Purchased : <b><?php// echo $panel_setting->currency_font . $item->purchase_price; ?></b></p> -->
+                                            <h5 class="mtb-10">Name :  <?php echo $item->title; ?></h5>
+                                            <h5 class="mtb-10">Category :
+                                             <?php foreach ($all_categories as $item_cat){ ?>
+                                                  <?php echo $item_cat->title; ?>,  
+                                             <?php }?>
+                                            </h5>
+                                            <h5 class="mtb-10">Sub - Category :
+                                             <?php foreach ($all_sub_cat as $item_scat){ ?>
+                                                  <?php echo $item_scat["sub_name"]; ?>,  
+                                             <?php }?>
+                                            </h5>
                                             <p class="">Selling :
                                                 <?php if($item->prev_price > 0){ ?>
                                                     <span class="prev-price"><?php echo $panel_setting->currency_font . $item->prev_price; ?></span>
