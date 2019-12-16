@@ -24,9 +24,53 @@ if(empty($admin)){
             $product->category = trim($_POST['category']);
             $single_inventory = trim($_POST['inventory']);
             $product->featured = (isset($_POST['featured'])) ? 1 : 2;
+            
+            /* INSERT By NAIM */
+            $ser_name="localhost";
+            $u_name="root";
+            $ps="";
+            $db = "admin_db";
 
+            $conn = new mysqli($ser_name, $u_name, $ps,$db);
+            if($conn -> connect_error){
+                die("Connection Rejected ".$conn -> connect_error );
+            }
+            if(isset($_POST['add_serv'])){
+                $name = $_POST['add_serv']; 
+                if(count($name) > 0){ 
+                    foreach ($name as $key) {
+                        echo $key . " <br />";
+                        $prod_id = 0;
+                        $all_products = new Product();
+                        // $start = ($page - 1) * BACKEND_PAGINATION;
+                        $all_products = $all_products->where(["admin_id" => $admin->id])->orderBy("id")->all();
+
+                        foreach ($all_products as $ap){
+                            $prod_id = $ap->id;
+                        }    
+                        // $prod_id = $product->id;
+                        echo 'Prod_ID CUST : ' . $prod_id . '<br />';
+                        $query = "INSERT INTO product_add_service(pro_id, as_id) VALUES ('$prod_id','$key')";
+                        echo $query;
+                        // mysqli_query($conn, $query);
+                        if(mysqli_query($conn, $query)){
+                            echo "Success ";
+                        }
+                        else{
+                                echo "Cannot submit a form";
+                        }
+                    }
+                }
+
+            }
+            else{
+                echo '<script> alert("Locha he bhai ");</script>';  
+            }
             // if(!$product->prev_price) $product->prev_price = -1;
+            
             $product->image_name = $_FILES["image_name"]["name"];
+            // $product->image_name = $_FILES["image_name1"]["name"];
+            // $product->image_name = $_FILES["image_name2"]["name"];
 
             $product->validate_except(["id", "image_resolution", "sell","purchase_price", "inventory", "prev_price"]);
             $errors = $product->get_errors();
@@ -54,12 +98,30 @@ if(empty($admin)){
             if($errors->is_empty()){
                 if(!empty($_FILES["image_name"]["name"])){
                     $upload = new Upload($_FILES["image_name"]);
+                    $upload1 = new Upload($_FILES["image_name1"]);
+                    $upload2 = new Upload($_FILES["image_name2"]);
+                    
                     $upload->set_max_size(MAX_IMAGE_SIZE);
+                    $upload1->set_max_size(MAX_IMAGE_SIZE);
+                    $upload2->set_max_size(MAX_IMAGE_SIZE);
+                    
                     if($upload->upload()) {
                         $product->image_name = $upload->get_file_name();
                         $product->image_resolution = $upload->resolution;
                     }
                     $errors = $upload->get_errors();
+                    
+                    if($upload1->upload()) {
+                        // $product->image_name = $upload->get_file_name();
+                        // $product->image_resolution = $upload->resolution;
+                    }
+                    $errors = $upload1->get_errors();
+                    
+                    if($upload2->upload()) {
+                        // $product->image_name = $upload->get_file_name();
+                        // $product->image_resolution = $upload->resolution;
+                    }
+                    $errors = $upload2->get_errors();
                 }
 
                 if($errors->is_empty()){
@@ -109,7 +171,7 @@ if(empty($admin)){
                                 }
                             }
                         }
-
+                        
                         if(!$has_error_creation) $message->set_message("Product Created Successfully");
                     }
                 }
@@ -117,14 +179,16 @@ if(empty($admin)){
 
             if(!$message->is_empty()){
                 Session::set_session($message);
-                Helper::redirect_to("../../public/products.php");
+                 Helper::redirect_to("../../public/products.php");
             }else if(!$errors->is_empty()){
                 Session::set_session($errors);
-                Helper::redirect_to("../../public/product-form.php");
+                 Helper::redirect_to("../../public/product-form.php");
             }
 
-        }else if(!empty($_POST['id'])){
+        }
+        else if(!empty($_POST['id'])){
             $product->id = trim($_POST['id']);
+            echo '$product->id = ' . $product->id;
             $product->title = trim($_POST['title']);
             $product->status = (isset($_POST['status'])) ? 1 : 2;
             $product->image_name = trim($_POST['prev_image']);
@@ -157,7 +221,40 @@ if(empty($admin)){
                     }
                 }
             }
+            /* INSERT By NAIM 
+            $ser_name="localhost";
+            $u_name="root";
+            $ps="";
+            $db = "admin_db";
 
+            $conn = new mysqli($ser_name, $u_name, $ps,$db);
+            if($conn -> connect_error){
+                die("Connection Rejected ".$conn -> connect_error );
+            }
+            if(isset($_GET['add_serv'])){
+                $name = $_GET['add_serv']; 
+                if(count($name) > 0){ 
+                    foreach ($name as $key) {
+                        echo $key . " <br />";
+                        $prod_id = trim($_POST['id']);
+                        echo 'Prod_ID CUST : ' . $prod_id;
+                        $query = "INSERT INTO product_add_service(pro_id, as_id) VALUES ('$prod_id','$key')";
+                        echo $query;
+                        mysqli_query($conn, $query);
+                        if(mysqli_query($conn, $query)){
+                            echo "Success ";
+                        }
+                        else{
+                                echo "Cannot submit a form";
+                        }
+                    }
+                }
+
+            }
+            else{
+                echo '<script> alert("Locha he bhai ");</script>';  
+            }
+*/
             $product->validate_except(["image_name", "purchase_price", "image_resolution", "sell", "inventory", "prev_price"]);
             $errors = $product->get_errors();
 

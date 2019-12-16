@@ -74,7 +74,19 @@ if(!empty($admin)){
 <body>
 
 <?php require("common/php/header.php"); ?>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script> 
+    /** Test script for autofill by Naim  */
+    $(document).ready(function(){
+        $("#tit").val('Some text here');
+        $("#curp").val('100');
+        $("#catp").val('5');
+        $("#sub_cat").val('10');
+        $("#decr").val('some test desc');
+        $("#tgs").val('some test desc');
+        $("#inventory").val('10');
+    });
+</script> 
 <div class="main-container">
     <?php require("common/php/sidebar.php"); ?>
 
@@ -130,18 +142,18 @@ if(!empty($admin)){
                             </div>
 
                             <label>Title</label>
-                            <input type="text" data-required="true" placeholder="Site Title" name="title" value="<?php echo $product->title; ?>"/>
+                            <input id="tit" type="text" data-required="true" placeholder="Site Title" name="title" value="<?php echo $product->title; ?>"/>
 
 
                             <label>Current Price</label>
                             <div class="price-input">
                                 <span><?php echo  $panel_setting->currency_font; ?></span>
-                                <input type="text" data-required="numeric" placeholder="Current Price" name="current_price" value="<?php echo $product->current_price; ?>"/>
+                                <input type="text" id="curp" data-required="numeric" placeholder="Current Price" name="current_price" value="<?php echo $product->current_price; ?>"/>
                             </div>
 
 
                             <?php if($all_categories > 0){ ?>
-                                <select name="category" data-required="dropdown">
+                                <select name="category" id="catp" data-required="dropdown">
                                     <option selected="true" disabled="disabled">Please select a category</option>
                                     <?php foreach($all_categories as $item){ ?>
                                         <?php if($product->category == $item->id) $selected_cat = "selected";
@@ -152,8 +164,8 @@ if(!empty($admin)){
                                 </select>
                             <?php  } ?>
                             <?php //if($all_sub_cat > 0){ ?>
-                                <select name="category" data-required="dropdown">
-                                    <option selected="true" disabled="disabled">Please select a category</option>
+                                <select name="sub_category" id="sub_cat" data-required="dropdown">
+                                    <option selected="true" disabled="disabled">Please select a Subcategory</option>
                                     <?php foreach($all_sub_cat as $item){ ?>
                                         <option value="<?php echo $item["Sub_id"]; ?>" ><?php echo $item["sub_name"]; ?></option>
                                     <?php }?>
@@ -171,13 +183,13 @@ if(!empty($admin)){
                             </h5>
 
                             <label>Description</label>
-                            <textarea data-required="true" class="desc" type="text" name="description"
+                            <textarea id="decr" data-required="true" class="desc" type="text" name="description"
                                           placeholder="Description"><?php echo $product->description; ?></textarea>
 
 
                             <label>Tags</label>
-                            <textarea data-required="true" class="desc" type="text" name="tags"
-                                      placeholder="men, men shirts, shirts"><?php echo $product->tags; ?></textarea>
+                            <textarea id="tgs" data-required="true" class="desc" type="text" name="tags"
+                                      placeholder="sofa,chair,table"><?php echo $product->tags; ?></textarea>
 
 
                             <div id="upload-status"></div>
@@ -197,19 +209,61 @@ if(!empty($admin)){
                                 <?php }  ?>
 
                             </div><!--multiple-images-->
+                            <!-- By Naim  -->
+                               <h5 class="mt-10 mb-30 oflow-hidden">
+                                <label href="#" class="switch">
+                                    <input type="checkbox" name="featured"
+                                        <?php if($product->featured == 1) echo "checked"; ?>/>
+                                    <span class="slider round"></span>
+                                </label>
+                                <span class="toggle-title ml-20">AR_Featured</span>
+                            </h5>
+                            <div class="item-content">
+                                <input type="hidden" name="id" value="<?php echo $product->id; ?>">
+                                <input type="hidden" name="admin_id" value="<?php echo $product->admin_id; ?>">
+                                <input type="hidden" name="prev_image" value="<?php echo $product->image_name; ?>"/>
 
+                                <label class="control-label" for="file">Primary Image(<?php echo "Max Image Size : " . MAX_IMAGE_SIZE . "MB. Required Format : png/jpg/jpeg"; ?>)</label>
 
-                            <label class="control-label" for="file">Upload More Images(<?php echo "Max File Count : " . MAX_FILE_COUNT . ". Max Image Size : " . MAX_IMAGE_SIZE . "MB. Required Format : png/jpg/jpeg";; ?>)</label>
+                                <div class="image-upload">
 
-                            <input type="hidden" name="uploaded-image-names" value="" />
-                            <input type="hidden" name="removed-image-ids" value="" />
+                                    <img src="<?php if(!empty($product->image_name))
+                                        echo UPLOADED_FOLDER . DIRECTORY_SEPARATOR . $product->image_name; ?>" alt="" class="uploaded-image"/>
 
-                            <input data-url="api/image/upload.php"
-                                   data-remove-url="api/image/remove.php"
-                                   id="file-upload" type="file" class="upload-img" accept=".obj" name="images[]" multiple />
+                                    <div class="h-100" class="upload-content">
+                                        <div class="dplay-tbl">
+                                            <div class="dplay-tbl-cell">
+                                                <i class="ion-ios-cloud-upload"></i>
+                                                <h5><b>Choose Your Image to Upload</b></h5>
+                                                <h6 class="mt-10 mb-70">Or Drop Your Image Here</h6>
+                                            </div>
+                                        </div>
+                            </div>
+                            <!--upload-content-->
+                                    <input data-required="image" type="file" name="image_name1" class="image-input"
+                                        data-traget-resolution="image_resolution" value="<?php echo $product->image_name; ?>"/>
+                                    <input type="hidden" name="image_resolution" value="<?php echo $product->image_resolution; ?>"/>
+                            </div>
+                            <br /> 
+                            <h5> Dimension </h5> 
+                            <div class="image-upload">
 
-                            <h6 class="right-text mb-30"><a data-popup="#attribute-popup" class="link" href="#">+ Add Attribute</a></h6>
+                                <img src="<?php if(!empty($product->image_name))
+                                    echo  UPLOADED_FOLDER . DIRECTORY_SEPARATOR . $product->image_name; ?>" alt="" class="uploaded-image"/>
 
+                                <div class="h-100" class="upload-content">
+                                    <div class="dplay-tbl">
+                                        <div class="dplay-tbl-cell">
+                                            <i class="ion-ios-cloud-upload"></i>
+                                            <h5><b>Choose Your Image to Upload</b></h5>
+                                            <h6 class="mt-10 mb-70">Or Drop Your Image Here</h6>
+                                        </div>
+                                    </div>
+                                </div><!--upload-content-->
+                                <input data-required="image" type="file" name="image_name2" class="image-input"
+                                       data-traget-resolution="image_resolution" value="<?php echo $product->image_name; ?>"/>
+                                <input type="hidden" name="image_resolution" value="<?php echo $product->image_resolution; ?>"/>
+                            </div>
                             <div id="combined-attr-wrapper">
                                 <?php if(empty($single_inventory) && !empty($inventories)){
 
@@ -253,7 +307,10 @@ if(!empty($admin)){
 
                                 <input id="inventory" type="text" placeholder="Quantity" name="inventory" value="<?php echo $single_inventory; ?>"/>
                             </div>
-
+                            <input type="checkbox" name="add_serv[]" value="1"> <label> &nbsp;&nbsp;Free Installation &nbsp;&nbsp; </label>
+                            <input type="checkbox" name="add_serv[]" value="2"> <label>&nbsp;Free Delivery &nbsp;&nbsp;</label>
+                            <input type="checkbox" name="add_serv[]" value="3"> <label>&nbsp;Return&nbsp;&nbsp;</label>
+                            <br><br>
                             <div class="btn-wrapper"><button type="submit" class="demo-disable c-btn mb-10"><b>Save</b></button></div>
 
                             <?php if($errors) echo $errors->format(); ?>
@@ -265,6 +322,8 @@ if(!empty($admin)){
             </div><!--item-->
 
         </div><!--item-wrapper-->
+        <!-- Test  -->
+        
     </div><!--main-content-->
 
 
