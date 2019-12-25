@@ -87,7 +87,7 @@ if(!empty($admin)){
                             <div class="p-25">
                                 <div class="two-sided-80">
                                     <div class="left">
-                                        <img src="<?php echo "uploads/". $notification -> image ?>" alt="image">
+                                        <img src="<?php echo "uploads/". $notification->img ?>" alt="image">
                                     </div>
                                     
                                 </div><!--$item-->

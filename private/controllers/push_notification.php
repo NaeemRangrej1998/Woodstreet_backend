@@ -19,45 +19,44 @@ if(empty($admin)){
         $push_notification->admin_id = $_POST['admin_id'];
         $push_notification->title = $_POST['title'];
         $push_notification->message = $_POST['message'];
-        $push_notification->image = $_POST['notify-image']["name"]; // Moin's test 
+        $push_notification->img = $_POST['notify_image'];
 
         if(!empty($push_notification->id)){
-
-            if($errors->is_empty()){
-                if(!empty($_FILES["notify-image"]["name"])){
-                    $upload = new Upload($_FILES["notify-image"]);
-                    $upload->set_max_size(MAX_IMAGE_SIZE);
-                    if($upload->upload()) {
-                        $push_notification->img = $upload->get_file_name();
-                        $push_notification->image_resolution = $upload->resolution;
-                    }
-                    $errors = $upload->get_errors();
-                }
-            }
 
             $push_notification->validate();
             $errors = $push_notification->get_errors();
             if($errors->is_empty()){
                 $new_push_notification = clone $push_notification;
-                if(!empty($_FILES["notify-image"]["name"])){
-                    $upload = new Upload($_FILES["notify-image"]);
-                    $upload->set_max_size(MAX_IMAGE_SIZE);
-                    if($upload->upload()) {
-                        $push_notification->img = $upload->get_file_name();
-                        // echo "Ha bhai";
-                        
-                        // $category->image_resolution = $upload->resolution;
-                    }
-                    $errors = $upload->get_errors();
-                }
                 if($push_notification->where(["id" => $push_notification->id])->update()){
                     $message->set_message("Successfully Added.");
                 }
             }
         }else{
-            $push_notification->validate_except(["id"]);
+            $push_notification->validate_except(["id", "img", "image_resolution"]);
             $errors = $push_notification->get_errors();
 
+            /* image upload  */
+            if(!empty($_FILES["notify-image"]["name"])){
+                $upload = new Upload($_FILES["notify-image"]);
+                $upload->set_max_size(MAX_IMAGE_SIZE);
+                if($upload->upload()){
+                    $upload->delete($push_notification->img);
+                    $push_notification->img = $upload->get_file_name();
+                    $push_notification->image_resolution = $upload->resolution;
+                }
+                $errors = $upload->get_errors();
+            }
+
+            if(!empty($_FILES["image_name"]["name"])){
+                    $upload = new Upload($_FILES["image_name"]);
+                    $upload->set_max_size(MAX_IMAGE_SIZE);
+                    if($upload->upload()){
+                        $upload->delete($product->image_name);
+                        $product->image_name = $upload->get_file_name();
+                        $product->image_resolution = $upload->resolution;
+                    }
+                    $errors = $upload->get_errors();
+            }
             if($errors->is_empty()){
                 if($push_notification->save()){
                     $message->set_message("Successfully Added.");

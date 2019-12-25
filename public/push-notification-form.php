@@ -29,23 +29,27 @@ if(!empty($admin)){
         <div class="item-wrapper one">
 
             <div class="item">
-
+                    <script>
+                    var loadFile = function(event) {
+                        var output = document.getElementById('preview_img');
+                        output.src = URL.createObjectURL(event.target.files[0]);
+                    };
+                    </script>
 
                     <div class="item-content">
 
                         <form data-validation="true" action="../private/controllers/push_notification.php"
                               method="post" enctype="multipart/form-data">
                             <?php if($message) echo $message->format(); ?>
-                                <div class="item-content">
+                                <!-- <div class="item-content"> -->
                                     <input type="hidden" name="id" value="<?php echo $push_notification->id; ?>">
                                     <input type="hidden" name="admin_id" value="<?php echo $push_notification->admin_id; ?>">
-                                    <input type="hidden" name="prev_img" value="<?php echo $push_notification->img; ?>"/>
+                                    <input type="hidden" name="notify_image" value="<?php echo $push_notification->img; ?>"/>
 
                                     <label class="control-label" for="file">Primary Image(<?php echo "Max Image Size : " . MAX_IMAGE_SIZE . "MB. Required Format : png/jpg/jpeg"; ?>)</label>
 
                                     <div class="image-upload">
-
-                                        <img src="<?php echo UPLOADED_FOLDER . DIRECTORY_SEPARATOR . $push_notification->img; ?>" alt="" class="uploaded-image"/>
+                                    <img src="<?php echo "uploads/" . $push_notification->img ?>" id="preview_img" alt="" class="uploaded-image"/>
 
                                         <div class="h-100" class="upload-content">
                                             <div class="dplay-tbl">
@@ -56,7 +60,7 @@ if(!empty($admin)){
                                                 </div>
                                             </div>
                                         </div><!--upload-content-->
-                                        <input data-required="image" type="file" name="notify-image" class="image-input"
+                                        <input data-required="image" type="file" name="notify-image" class="image-inputaa" onchange="loadFile(event)"
                                                 data-traget-resolution="image_resolution" value="<?php echo $push_notification->img; ?>"/>
                                         <input type="hidden" name="image_resolution" value=""/>
                                     </div>
