@@ -8,7 +8,7 @@
 <div class="header">
     <a class="toolbar-left" href="index.php">
         <img class="site-logo" src="<?php echo "uploads" . DIRECTORY_SEPARATOR . $s_config->image_name;?>" alt="image"/>
-        <h4 class="site-title"><b><?php echo $s_config->title; ?></b></h4>
+        <h4 class="site-title"><b>Woodstreet </b></h4>
     </a><!--toolbar-left-->
 
     <div class="toolbar-right">

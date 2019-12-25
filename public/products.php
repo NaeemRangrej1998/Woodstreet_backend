@@ -109,7 +109,7 @@ if(!empty($admin)){
                                                   <?php echo $item_scat["sub_name"]; ?>,  
                                              <?php }?>
                                             </h5>
-                                            <p class="">Selling :
+                                            <p class="">Current price :
                                                 <?php if($item->prev_price > 0){ ?>
                                                     <span class="prev-price"><?php echo $panel_setting->currency_font . $item->prev_price; ?></span>
                                                 <?php } ?>

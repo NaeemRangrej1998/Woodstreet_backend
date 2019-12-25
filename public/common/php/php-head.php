@@ -13,7 +13,7 @@ if(!empty($admin->id)){
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-	<title><?php echo $s_config->title . " - " . $s_config->tag_line; ?></title>
+	<title> Woodstreet </title>
     <link rel="icon" href="<?php echo "uploads" . DIRECTORY_SEPARATOR . $s_config->image_name; ?>">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">

@@ -191,7 +191,7 @@ class Upload{
             caused the file upload to stop; 
             examining the list of loaded extensions with phpinfo() may help.");
         else
-            $this->errors->add_error("Something went wrong while uploading. Please try again");
+            $this->errors->add_error("");
 
     }
 

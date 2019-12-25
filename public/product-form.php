@@ -115,6 +115,7 @@ if(!empty($admin)){
                             </h5>
                         </div><!--item-header-->
 
+
                         <div class="item-content">
                             <input type="hidden" name="id" value="<?php echo $product->id; ?>">
                             <input type="hidden" name="admin_id" value="<?php echo $product->admin_id; ?>">
@@ -136,11 +137,10 @@ if(!empty($admin)){
                                         </div>
                                     </div>
                                 </div><!--upload-content-->
-                                <input data-required="image" type="file" name="image_name" class="image-input"
+                                <input data-required="image" type="file" accept="image/*" name="image_name" class="image-input"
                                        data-traget-resolution="image_resolution" value="<?php echo $product->image_name; ?>"/>
                                 <input type="hidden" name="image_resolution" value="<?php echo $product->image_resolution; ?>"/>
                             </div>
-
                             <label>Title</label>
                             <input id="tit" type="text" data-required="true" placeholder="Site Title" name="title" value="<?php echo $product->title; ?>"/>
 
@@ -209,47 +209,71 @@ if(!empty($admin)){
                                 <?php }  ?>
 
                             </div><!--multiple-images-->
+                            <label class="control-label" for="file">Upload More Images(<?php echo "Max File Count : " . MAX_FILE_COUNT . ". Max Image Size : " . MAX_IMAGE_SIZE . "MB. Required Format : png/jpg/jpeg";; ?>)</label>
+
+                            <input type="hidden" name="uploaded-image-names" value="" />
+                            <input type="hidden" name="removed-image-ids" value="" />
+
+                            <input data-url="api/image/upload.php"
+                                   data-remove-url="api/image/remove.php"
+                                   id="file-upload" type="file" class="upload-img" name="images[]" multiple />
+
+
                             <!-- By Naim  -->
-                               <h5 class="mt-10 mb-30 oflow-hidden">
+                              
+                            <h5 class="mt-10 mb-30 oflow-hidden">
                                 <label href="#" class="switch">
-                                    <input type="checkbox" name="featured"
+                                    <input type="checkbox" name="ar_featured"
                                         <?php if($product->featured == 1) echo "checked"; ?>/>
                                     <span class="slider round"></span>
                                 </label>
-                                <span class="toggle-title ml-20">AR_Featured</span>
+                                <span class="toggle-title ml-20">AR featured</span>
                             </h5>
-                            <div class="item-content">
-                                <input type="hidden" name="id" value="<?php echo $product->id; ?>">
-                                <input type="hidden" name="admin_id" value="<?php echo $product->admin_id; ?>">
-                                <input type="hidden" name="prev_image" value="<?php echo $product->image_name; ?>"/>
+                            
+                            <input type="hidden" name="id" value="<?php echo $product->id; ?>">
+                            <input type="hidden" name="admin_id" value="<?php echo $product->admin_id; ?>">
+                            <input type="hidden" name="ar_prev_image" value="<?php echo $product->ar_image; ?>"/>
 
-                                <label class="control-label" for="file">Primary Image(<?php echo "Max Image Size : " . MAX_IMAGE_SIZE . "MB. Required Format : png/jpg/jpeg"; ?>)</label>
+                            <label class="control-label" for="file">Primary Image(<?php echo "Max Image Size : " . MAX_IMAGE_SIZE . "MB. Required Format : png/jpg/jpeg"; ?>)</label>
 
-                                <div class="image-upload">
-
-                                    <img src="<?php if(!empty($product->image_name))
-                                        echo UPLOADED_FOLDER . DIRECTORY_SEPARATOR . $product->image_name; ?>" alt="" class="uploaded-image"/>
-
-                                    <div class="h-100" class="upload-content">
-                                        <div class="dplay-tbl">
-                                            <div class="dplay-tbl-cell">
-                                                <i class="ion-ios-cloud-upload"></i>
-                                                <h5><b>Choose Your Image to Upload</b></h5>
-                                                <h6 class="mt-10 mb-70">Or Drop Your Image Here</h6>
-                                            </div>
-                                        </div>
-                            </div>
-                            <!--upload-content-->
-                                    <input data-required="image" type="file" name="image_name1" class="image-input"
-                                        data-traget-resolution="image_resolution" value="<?php echo $product->image_name; ?>"/>
-                                    <input type="hidden" name="image_resolution" value="<?php echo $product->image_resolution; ?>"/>
-                            </div>
-                            <br /> 
-                            <h5> Dimension </h5> 
                             <div class="image-upload">
 
-                                <img src="<?php if(!empty($product->image_name))
-                                    echo  UPLOADED_FOLDER . DIRECTORY_SEPARATOR . $product->image_name; ?>" alt="" class="uploaded-image"/>
+                                <img src="<?php if(!empty($product->ar_image))
+                                    echo UPLOADED_FOLDER . DIRECTORY_SEPARATOR . $product->ar_image; ?>" alt="" class="uploaded-image"/>
+
+                                <div class="h-100" class="upload-content">
+                                    <div class="dplay-tbl">
+                                        <div class="dplay-tbl-cell">
+                                            <i class="ion-ios-cloud-upload"></i>
+                                            <h5><b>Choose Your Image to Upload</b></h5>
+                                            <h6 class="mt-10 mb-70">Or Drop Your Image Here</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--upload-content-->
+                                <input data-required="image" type="file" accept=".obj" name="ar_img" class="image-input"
+                                       data-traget-resolution="ar_image_resolution" value="<?php echo $product->ar_image; ?>"/>
+                                <input type="hidden" name="ar_image_resolution" value="<?php echo $product->ar_image_resolution; ?>"/>
+                            </div>
+                            <!-- Dimension image  -->
+                            <h5 class="mt-10 mb-30 oflow-hidden">
+                                <label href="#" class="switch">
+                                    <input type="checkbox" name="dim_featured"
+                                        <?php if($product->dim_featured == 1) echo "checked"; ?>/>
+                                    <span class="slider round"></span>
+                                </label>
+                                <span class="toggle-title ml-20">Dimension featured</span>
+                            </h5>
+                            <input type="hidden" name="id" value="<?php echo $product->id; ?>">
+                            <input type="hidden" name="admin_id" value="<?php echo $product->admin_id; ?>">
+                            <input type="hidden" name="dim_prev_image" value="<?php echo $product->dim_image; ?>"/>
+
+                            <label class="control-label" for="file">Primary Image(<?php echo "Max Image Size : " . MAX_IMAGE_SIZE . "MB. Required Format : png/jpg/jpeg"; ?>)</label>
+
+                            <div class="image-upload">
+
+                                <img src="<?php if(!empty($product->dim_image))
+                                    echo UPLOADED_FOLDER . DIRECTORY_SEPARATOR . $product->dim_image; ?>" alt="" class="uploaded-image"/>
 
                                 <div class="h-100" class="upload-content">
                                     <div class="dplay-tbl">
@@ -260,9 +284,9 @@ if(!empty($admin)){
                                         </div>
                                     </div>
                                 </div><!--upload-content-->
-                                <input data-required="image" type="file" name="image_name2" class="image-input"
-                                       data-traget-resolution="image_resolution" value="<?php echo $product->image_name; ?>"/>
-                                <input type="hidden" name="image_resolution" value="<?php echo $product->image_resolution; ?>"/>
+                                <input data-required="image" type="file" accept="image/*" name="dim_img" class="image-input"
+                                       data-traget-resolution="image_resolution" value="<?php echo $product->dim_image; ?>"/>
+                                <input type="hidden" name="image_resolution" value="<?php echo $product->dim_mage_resolution; ?>"/>
                             </div>
                             <div id="combined-attr-wrapper">
                                 <?php if(empty($single_inventory) && !empty($inventories)){

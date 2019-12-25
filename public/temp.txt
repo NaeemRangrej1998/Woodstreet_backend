@@ -1,0 +1,54 @@
+`<h5 class="mt-10 mb-30 oflow-hidden">
+                                <label href="#" class="switch">
+                                    <input type="checkbox" name="featured"
+                                        <?php if($product->featured == 1) echo "checked"; ?>/>
+                                    <span class="slider round"></span>
+                                </label>
+                                <span class="toggle-title ml-20">AR_Featured</span>
+                            </h5>
+                            <div class="item-content">
+                                <input type="hidden" name="id" value="<?php echo $product->id; ?>">
+                                <input type="hidden" name="admin_id" value="<?php echo $product->admin_id; ?>">
+                                <input type="hidden" name="prev_image" value="<?php echo $product->image_name; ?>"/>
+
+                                <label class="control-label" for="file">Primary Image(<?php echo "Max Image Size : " . MAX_IMAGE_SIZE . "MB. Required Format : png/jpg/jpeg"; ?>)</label>
+
+                                <div class="image-upload">
+
+                                    <img src="<?php if(!empty($product->image_name))
+                                        echo UPLOADED_FOLDER . DIRECTORY_SEPARATOR . $product->image_name; ?>" alt="" class="uploaded-image"/>
+
+                                    <div class="h-100" class="upload-content">
+                                        <div class="dplay-tbl">
+                                            <div class="dplay-tbl-cell">
+                                                <i class="ion-ios-cloud-upload"></i>
+                                                <h5><b>Choose Your Image to Upload</b></h5>
+                                                <h6 class="mt-10 mb-70">Or Drop Your Image Here</h6>
+                                            </div>
+                                        </div>
+                            </div>
+                            <!--upload-content-->
+                                    <input data-required="image" type="file" name="image_name1" class="image-input"
+                                        data-traget-resolution="image_resolution" value="<?php echo $product->image_name; ?>"/>
+                                    <input type="hidden" name="image_resolution" value="<?php echo $product->image_resolution; ?>"/>
+                            </div>
+                            <br /> 
+                            <h5> Dimension </h5> 
+                            <div class="image-upload">
+
+                                <img src="<?php if(!empty($product->image_name))
+                                    echo  UPLOADED_FOLDER . DIRECTORY_SEPARATOR . $product->image_name; ?>" alt="" class="uploaded-image"/>
+
+                                <div class="h-100" class="upload-content">
+                                    <div class="dplay-tbl">
+                                        <div class="dplay-tbl-cell">
+                                            <i class="ion-ios-cloud-upload"></i>
+                                            <h5><b>Choose Your Image to Upload</b></h5>
+                                            <h6 class="mt-10 mb-70">Or Drop Your Image Here</h6>
+                                        </div>
+                                    </div>
+                                </div><!--upload-content-->
+                                <input data-required="image" type="file" name="image_name2" class="image-input"
+                                       data-traget-resolution="image_resolution" value="<?php echo $product->image_name; ?>"/>
+                                <input type="hidden" name="image_resolution" value="<?php echo $product->image_resolution; ?>"/>
+                            </div>

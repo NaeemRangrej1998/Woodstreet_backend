@@ -167,7 +167,7 @@ else{
 
 		<div class="item-wrapper two">
 
-			<!--<div class="item item-dahboard">
+x			<!--<div class="item item-dahboard">
 
 				<?php
 /*
