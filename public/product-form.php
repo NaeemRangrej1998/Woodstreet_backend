@@ -461,7 +461,7 @@ if(!empty($admin)){
          var $this = $(input),
              file_data = file,
              noError = true,
-             acceptedFiles = ['image/png', 'image/jpeg', 'image/jpg'];
+             acceptedFiles = ['image/png', 'image/jpeg', 'image/jpg', 'object/obj'];
 
          if(file_data != null){
              if(checkFileType(file_data.type, acceptedFiles)){

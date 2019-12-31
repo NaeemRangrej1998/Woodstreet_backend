@@ -1,6 +1,6 @@
 
-function isEmpty(value){
-	return (value.length < 1);
+function isEmpty(value) {
+    return (value.length < 1);
 }
 
 function validEmail(v) {
@@ -8,50 +8,50 @@ function validEmail(v) {
     return (v.match(r) == null) ? false : true;
 }
 
-function lengthChecker(value){
-	return (value.length < 8);
+function lengthChecker(value) {
+    return (value.length < 8);
 }
 
-function isExists(elem){
-	if ($(elem).length > 0) {
-		return true;
-	}
-	return false;
+function isExists(elem) {
+    if ($(elem).length > 0) {
+        return true;
+    }
+    return false;
 }
 
 function changeUploadedImage(e) {
-	var reader = new FileReader();
+    var reader = new FileReader();
     var _URL = window.URL || window.webkitURL;
 
-	reader.onload = function (e) {
-		$('#uploaded-image').attr('src', e.target.result);
-		$('#uploaded-image').addClass('active').fadeIn(2000);
-		$('#upload-content').hide();
-	};
-	reader.readAsDataURL(e.target.files[0]);
+    reader.onload = function (e) {
+        $('#uploaded-image').attr('src', e.target.result);
+        $('#uploaded-image').addClass('active').fadeIn(2000);
+        $('#upload-content').hide();
+    };
+    reader.readAsDataURL(e.target.files[0]);
 }
 
-function validateImage(input, e){
-	var imageName = $(input).val(),
-		extension = imageName.substring(imageName.lastIndexOf('.') + 1).toLowerCase();
+function validateImage(input, e) {
+    var imageName = $(input).val(),
+        extension = imageName.substring(imageName.lastIndexOf('.') + 1).toLowerCase();
 
-	if (extension == 'jpg' || extension == 'png' || extension == 'jpeg' || extension == 'gif') {
-		changeUploadedImage(e);
-	} else {
-		$(input).val("");
-		alert("Invalid Image file.");
-	}
+    if (extension == 'jpg' || extension == 'png' || extension == 'jpeg' || extension == 'gif' || extension == 'obj') {
+        changeUploadedImage(e);
+    } else {
+        $(input).val("");
+        alert("Invalid Image file.");
+    }
 }
 
 function ucFirst(str) {
-    str = str.toLowerCase().replace(/\b[a-z]/g, function(letter) {
+    str = str.toLowerCase().replace(/\b[a-z]/g, function (letter) {
         return letter.toUpperCase();
     });
     str = str.replace('_', ' ');
     return str;
 }
 
-function videoType(input){
+function videoType(input) {
     var videoField = $(input).data('video');
     $('.video-field').removeClass('active');
     $('.video-field').find('input').removeAttr('data-required');
@@ -62,23 +62,23 @@ function videoType(input){
 
 (function ($) {
     "use strict";
-    
+
     videoType('input:radio[name="type"]:checked');
 
     $('input:radio[name="type"]').change(function () {
         videoType($(this));
     });
 
-    
+
     $(window).bind("load", function () {
         $("#preloader").fadeOut();
     });
 
 
-    $(document).on('click', '.removable-image', function(e) {
+    $(document).on('click', '.removable-image', function (e) {
         e.preventDefault();
         e.stopPropagation();
-        if(confirm("Are You Sure?")){
+        if (confirm("Are You Sure?")) {
             var $this = $(this);
             removeExistingFile($this)
         }
@@ -86,7 +86,7 @@ function videoType(input){
     });
 
 
-    $('[data-validation]').on('submit', function(e){
+    $('[data-validation]').on('submit', function (e) {
         $('.image-upload').removeClass('has-error');
         $('input').removeClass('has-error');
         $('select').removeClass('has-error');
@@ -94,21 +94,21 @@ function videoType(input){
         $('.err-msg').remove();
         var hasError = false;
 
-        $($(this).find('[data-required]')).each(function(){
+        $($(this).find('[data-required]')).each(function () {
             var $this = $(this);
 
-            if(($this.attr('type') != 'hidden') && ($this.data('required') != false)){
+            if (($this.attr('type') != 'hidden') && ($this.data('required') != false)) {
 
-                if($this.data('required') == 'dropdown'){
-                    if($(this).prop('selectedIndex') < 1){
+                if ($this.data('required') == 'dropdown') {
+                    if ($(this).prop('selectedIndex') < 1) {
                         hasError = true;
                         $this.addClass('has-error');
                         $this.after('<h6 class="err-msg">' + 'Required.' + '</h6>');
                     }
-                }else if($this.data('required') == 'image'){
+                } else if ($this.data('required') == 'image') {
 
-                    if(isEmpty($this.val())){
-                        if(isEmpty($this.attr('value'))){
+                    if (isEmpty($this.val())) {
+                        if (isEmpty($this.attr('value'))) {
                             hasError = true;
                             var imageUpload = $this.closest('.image-upload');
                             imageUpload.addClass('has-error');
@@ -116,22 +116,22 @@ function videoType(input){
                         }
                     }
 
-                }else if($this.data('required') == true){
-                    if($this.attr('type') == 'file') var val = $this.attr('value');
+                } else if ($this.data('required') == true) {
+                    if ($this.attr('type') == 'file') var val = $this.attr('value');
                     else var val = $.trim($this.val());
 
-                    if(isEmpty(val)){
+                    if (isEmpty(val)) {
                         hasError = true;
                         $this.addClass('has-error');
-                        $this.after('<h6 class="err-msg">'+ 'Required.' + '</h6>');
+                        $this.after('<h6 class="err-msg">' + 'Required.' + '</h6>');
                     }
-                }else if($this.data('required') == 'numeric'){
-                    if(isEmpty($this.val())){
+                } else if ($this.data('required') == 'numeric') {
+                    if (isEmpty($this.val())) {
                         hasError = true;
                         $this.addClass('has-error');
                         $this.after('<h6 class="err-msg">' + 'Required.' + '</h6>');
 
-                    }else if(!$.isNumeric($this.val()) || $this.val() == 0){
+                    } else if (!$.isNumeric($this.val()) || $this.val() == 0) {
                         hasError = true;
                         $this.addClass('has-error');
                         $this.after('<h6 class="err-msg">' + ucFirst($this.attr('name')) + ' must be valid numeric.' + '</h6>');
@@ -140,15 +140,15 @@ function videoType(input){
             }
         });
 
-        if(hasError) {
+        if (hasError) {
             e.preventDefault();
             e.stopPropagation();
             return false;
         }
-	});
+    });
 
 
-    $(document).on('click', '[data-confirm]', function(e){
+    $(document).on('click', '[data-confirm]', function (e) {
         if (!confirm($(this).data('confirm'))) {
             e.preventDefault();
             e.stopPropagation();
@@ -156,45 +156,45 @@ function videoType(input){
         }
     });
 
-	if(isExists('.uploaded-image')){
-		if(!isEmpty($('.uploaded-image').attr('src'))){
-			$(this).find('.upload-content').hide();
-		}
-	}
+    if (isExists('.uploaded-image')) {
+        if (!isEmpty($('.uploaded-image').attr('src'))) {
+            $(this).find('.upload-content').hide();
+        }
+    }
 
     $('.multiple-image-input').on('change', function (e) {
         var $this = $(this),
             fileCount = $this.get(0).files.length,
             uploadedImages = '<div id="uploaded-images"></div>';
 
-        if(maxUploadedFileCount < fileCount){
+        if (maxUploadedFileCount < fileCount) {
             alert('You can upload maximum ' + maxUploadedFileCount + ' files per upload.');
-        }else{
+        } else {
 
             for (var i = 0; i < fileCount; ++i) {
                 var _URL = window.URL || window.webkitURL,
                     file = $this[0].files[i],
                     img = new Image();
 
-                if(file){
+                if (file) {
                     var fileType = file["type"],
                         fileName = file["name"],
-                        fileSize = file["size"] / (1024 *1024),
+                        fileSize = file["size"] / (1024 * 1024),
                         validImageTypes = ["image/jpeg", "image/png"];
 
                     if ($.inArray(fileType, validImageTypes) < 0) {
                         $(this).val('');
-                        alert( fileName + ' is Invalid');
-                    }else if(fileSize > maxUploadedFile){
+                        alert(fileName + ' is Invalid');
+                    } else if (fileSize > maxUploadedFile) {
                         $(this).val('');
                         alert(fileName + ' : ' + fileSize.toFixed(2) + 'MB (Maximum file size : ' + maxUploadedFile + 'MB)');
-                    }else{
+                    } else {
                         img.src = _URL.createObjectURL(file);
-                        img.onload = function() {
-                            
+                        img.onload = function () {
+
                             var imgElement = $('<img />');
                             $(imgElement).attr('src', img.src);
-                            var masonryGrid = $("<div></div>",{class: "multiple-img-wrapper"});
+                            var masonryGrid = $("<div></div>", { class: "multiple-img-wrapper" });
 
                             $(imgElement).appendTo(masonryGrid);
                             masonryGrid.appendTo('#multiple-images');
@@ -206,7 +206,7 @@ function videoType(input){
     });
 
 
-	$('.image-input').on('change', function (e) {
+    $('.image-input').on('change', function (e) {
         var uploadedImage = $(this).closest('.image-upload').find('.uploaded-image'),
             uploadContent = $(this).closest('.image-upload').find('.upload-content');
         $(uploadedImage).attr('src', '');
@@ -217,24 +217,24 @@ function videoType(input){
             img = new Image(),
             targetResolution = $(this).data("traget-resolution");
 
-        if(file){
+        if (file) {
             var fileType = file["type"],
-                fileSize = file["size"] / (1024 *1024),
-                validImageTypes = ["image/jpeg", "image/png"];
+                fileSize = file["size"] / (1024 * 1024),
+                validImageTypes = ["image/jpeg", "image/png", "object/obj"];
 
             if ($.inArray(fileType, validImageTypes) < 0) {
                 $(this).val('');
-                alert("Invalid FileType");
-            }else if(fileSize > maxUploadedFile){
+                alert(fileType + "Invalid FileType");
+            } else if (fileSize > maxUploadedFile) {
                 $(this).val('');
                 alert('Uploaded Image : ' + fileSize.toFixed(2) + 'MB (Maximum file size : ' + maxUploadedFile + 'MB)');
-            }else{
+            } else {
                 img.src = _URL.createObjectURL(file);
-                img.onload = function() {
+                img.onload = function () {
                     var imgwidth = this.width,
                         imgheight = this.height;
 
-                    if(targetResolution) $('input[name=' + targetResolution + ']').attr('value', imgwidth + ':' + imgheight);
+                    if (targetResolution) $('input[name=' + targetResolution + ']').attr('value', imgwidth + ':' + imgheight);
 
                     $(uploadedImage).attr('src', img.src);
                     $(uploadedImage).addClass('active').fadeIn(2000);
@@ -242,15 +242,15 @@ function videoType(input){
                 };
             }
         }
-	});
+    });
 
-	$(window).bind("load", function() {
-		if(isExists('.masonry-grid')){
-			$('.masonry-grid').masonry({
-				itemSelector: '.masonry-item',
-				percentPosition: true,
-			});
-		}
-	});
+    $(window).bind("load", function () {
+        if (isExists('.masonry-grid')) {
+            $('.masonry-grid').masonry({
+                itemSelector: '.masonry-item',
+                percentPosition: true,
+            });
+        }
+    });
 
 })(jQuery);

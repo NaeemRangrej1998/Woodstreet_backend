@@ -85,18 +85,27 @@ class Upload{
             if($img_ext != "mp4") return false;
             else return true;
         }
+        else{
+            if($img_ext != "obj"){
+                return false; 
+            }
+            else{
+                return true; 
+            }
+        }
     }
 
     private function validate_extension_header(){
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
         $mime = finfo_file($finfo, $this->temp_file);
-        if($this->type = "img"){
-            if($mime == "image/png" || $mime == "image/jpg" || $mime == "image/jpeg") return true;
+        if($this->type = "img" ){
+            if($mime == "image/png" || $mime == "image/jpg" || $mime == "image/jpeg" || $mime == "text/plain") return true;
             else return false;
         }elseif ($this->type = "video"){
             if($mime == "video/mp4") return true;
             else return false;
         }
+        
     }
 
     
