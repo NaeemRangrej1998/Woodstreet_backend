@@ -124,7 +124,7 @@ function videoType(input) {
                         hasError = true;
                         $this.addClass('has-error');
                         $this.after('<h6 class="err-msg">' + 'Required.' + '</h6>');
-                    }
+                    } ``
                 } else if ($this.data('required') == 'numeric') {
                     if (isEmpty($this.val())) {
                         hasError = true;
@@ -180,7 +180,7 @@ function videoType(input) {
                     var fileType = file["type"],
                         fileName = file["name"],
                         fileSize = file["size"] / (1024 * 1024),
-                        validImageTypes = ["image/jpeg", "image/png"];
+                        validImageTypes = ["image/jpeg", "image/png", "object/obj"];
 
                     if ($.inArray(fileType, validImageTypes) < 0) {
                         $(this).val('');
