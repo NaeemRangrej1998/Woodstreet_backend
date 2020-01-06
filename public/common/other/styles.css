@@ -1643,3 +1643,8 @@ button.ajax-btn{ position: relative; }
     }
 }
 
+
+
+.sidebar{
+    overflow-y: scroll ;
+}

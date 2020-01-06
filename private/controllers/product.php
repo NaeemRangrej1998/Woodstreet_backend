@@ -34,8 +34,9 @@ if(empty($admin)){
             $product->image_name = $_FILES["image_name"]["name"];
             $product->ar_image = $_FILES["ar_img"]["name"];
             $product->dim_image = $_FILES["dim_img"]["name"];
+            $product->sub_cat = $_POST['sub_category']; 
             /** play with below line  */
-             $product->validate_except(["id", "image_resolution", "sell", "inventory", "prev_price","purchase_price" ,"ar_image" , "dim_image","ar_featured", "dim_featured", "ar_image_resolution","dim_image_resolution" ]);
+             $product->validate_except(["id", "image_resolution", "sell", "inventory", "prev_price","purchase_price" ,"ar_image" , "dim_image","ar_featured", "dim_featured", "ar_image_resolution","dim_image_resolution", "sub_cat" ]);
             $errors = $product->get_errors();
 
             $has_qty_error = false;
@@ -172,7 +173,8 @@ if(empty($admin)){
             $product->description = trim($_POST['description']);
             $product->tags = trim($_POST['tags']);
             $product->featured = (isset($_POST['featured'])) ? 1 : 2;
-         
+            $product->sub_cat = $_POST['sub_category'];
+            
             if(!$product->prev_price) $product->prev_price = -1;
 
             $inventory = [];
@@ -192,7 +194,7 @@ if(empty($admin)){
             }
             /** Play with below line  */
 
-             $product->validate_except(["id", "image_resolution", "sell", "inventory", "prev_price","purchase_price", "ar_image" , "dim_image","ar_featured", "dim_featured", "ar_image_resolution","dim_image_resolution" ]);
+             $product->validate_except(["id", "image_resolution", "sell", "inventory", "prev_price","purchase_price", "ar_image" , "dim_image","ar_featured", "dim_featured", "ar_image_resolution","dim_image_resolution", "sub_cat" ]);
 
 
             $errors = $product->get_errors();
@@ -419,12 +421,12 @@ if(empty($admin)){
             $product->category = trim($_POST['category']);
             $single_inventory = trim($_POST['inventory']);
             $product->featured = (isset($_POST['featured'])) ? 1 : 2;
-
+            $product->sub_cat = $_POST['sub_category'];
+            
             if(!$product->prev_price) $product->prev_price = -1;
             $product->image_name = $_FILES["image_name"]["name"];
-             $product->validate_except(["id", "image_resolution", "sell", "inventory", "prev_price","purchase_price", "ar_image" , "dim_image","ar_featured", "dim_featured", "ar_image_resolution","dim_image_resolution" ]);
+            $product->validate_except(["id", "image_resolution", "sell", "inventory", "prev_price","purchase_price", "ar_image" , "dim_image","ar_featured", "dim_featured", "ar_image_resolution","dim_image_resolution", "sub_cat" ]);
 
-            // $product->validate_except(["id", "image_resolution", "sell", "inventory", "purchase_price", "prev_price"]);
             $errors = $product->get_errors();
 
             $has_qty_error = false;
@@ -535,6 +537,8 @@ if(empty($admin)){
             $product->description = trim($_POST['description']);
             $product->tags = trim($_POST['tags']);
             $product->featured = (isset($_POST['featured'])) ? 1 : 2;
+            $product->sub_cat = $_POST['sub_category'];
+            
 
             if(!$product->prev_price) $product->prev_price = -1;
 

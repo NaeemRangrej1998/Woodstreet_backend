@@ -28,5 +28,6 @@ class Product extends Util{
     public $dim_image_resolution;   
     
     public $sell;
+    public $sub_cat; 
 
 }

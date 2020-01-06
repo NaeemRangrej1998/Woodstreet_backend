@@ -85,6 +85,9 @@ if(!empty($admin)){
         $("#decr").val('some test desc');
         $("#tgs").val('some test desc');
         $("#inventory").val('10');
+
+        
+        alert($("#sub_cat").val()); 
     });
 </script> 
 <div class="main-container">
@@ -151,9 +154,9 @@ if(!empty($admin)){
                                 <input type="text" id="curp" data-required="numeric" placeholder="Current Price" name="current_price" value="<?php echo $product->current_price; ?>"/>
                             </div>
 
-
+ 
                             <?php if($all_categories > 0){ ?>
-                                <select name="category" id="catp" data-required="dropdown">
+                                <select name="category" data-required="dropdown">
                                     <option selected="true" disabled="disabled">Please select a category</option>
                                     <?php foreach($all_categories as $item){ ?>
                                         <?php if($product->category == $item->id) $selected_cat = "selected";
@@ -163,14 +166,19 @@ if(!empty($admin)){
                                     <?php }?>
                                 </select>
                             <?php  } ?>
-                            <?php //if($all_sub_cat > 0){ ?>
+
+                            <?php if(count($all_sub_cat) > 0){ ?>
                                 <select name="sub_category" id="sub_cat" data-required="dropdown">
-                                    <option selected="true" disabled="disabled">Please select a Subcategory</option>
-                                    <?php foreach($all_sub_cat as $item){ ?>
-                                        <option value="<?php echo $item["Sub_id"]; ?>" ><?php echo $item["sub_name"]; ?></option>
+                                    <option selected="true" disabled >Please select a Subcategory</option>
+                                    <?php foreach($all_sub_cat as $item){ ?> 
+                                        <?php 
+                                            if($product->sub_cat == $item['Sub_id']) $selected_cat = "selected";
+                                            else $selected_cat = "";
+                                        ?>
+                                        <option value="<?php echo $item['Sub_id']; ?>" <?php echo $selected_cat ?> >  <?php echo $item['sub_name']; ?></option>
                                     <?php }?>
                                 </select>
-                            <?php  //} ?>
+                            <?php  } ?>
 
                             
                             <h5 class="mt-10 mb-30 oflow-hidden">
@@ -288,6 +296,7 @@ if(!empty($admin)){
                                        data-traget-resolution="image_resolution" value="<?php echo $product->dim_image; ?>"/>
                                 <input type="hidden" name="image_resolution" value="<?php echo $product->dim_mage_resolution; ?>"/>
                             </div>
+                            <h6 class="right-text mb-30"><a data-popup="#attribute-popup" class="link" href="#">+ Add Attribute</a></h6>
                             <div id="combined-attr-wrapper">
                                 <?php if(empty($single_inventory) && !empty($inventories)){
 

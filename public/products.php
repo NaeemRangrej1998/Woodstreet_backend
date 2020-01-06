@@ -28,7 +28,7 @@ if(!empty($admin)){
 
     $panel_setting = new Setting();
     $panel_setting = $panel_setting->where(["admin_id"=> $admin->id])->one();
-    function get_subcategory(){
+    function get_subcategory($prod_id){
         $ser_name="localhost";
         $u_name="root";
         $ps="";
@@ -39,14 +39,20 @@ if(!empty($admin)){
             die("Connection Rejected ".$conn -> connect_error );
         }
 
-        $query = "SELECT Sub_id,sub_name, id,title FROM sub_category INNER JOIN category on parent_id = id ";
+        $query = "SELECT DISTINCT Sub_id,sub_name FROM sub_category INNER JOIN product on sub_cat = Sub_id AND id = $prod_id";
         $result = $conn->query($query);
-
-        if ($result->num_rows > 0) {
-            return $result;
-        } 
+        // $name = $result["sub_name"]; 
+        // echo  $result; 
+        while($row = $result->fetch_assoc()){
+            $name = $row['sub_name']; 
+        }
+        return $name;    
+        // if ($result->num_rows > 0) {
+        //     // return $result;
+        // } 
     }
-    $all_sub_cat = get_subcategory();
+    // echo " " . get_subcategory('101'); 
+    // $all_sub_cat = get_subcategory();
 }else Helper::redirect_to("login.php");
 
 ?>
@@ -100,14 +106,21 @@ if(!empty($admin)){
 
                                             <h5 class="mtb-10">Name :  <?php echo $item->title; ?></h5>
                                             <h5 class="mtb-10">Category :
-                                             <?php foreach ($all_categories as $item_cat){ ?>
-                                                  <?php echo $item_cat->title; ?>,  
+                                             <?php foreach ($all_categories as $item_cat){
+                                                   if($item->category == $item_cat->id ){
+                                                        echo $item_cat->title;     
+                                                   }
+                                                    ?>   
                                              <?php }?>
                                             </h5>
                                             <h5 class="mtb-10">Sub - Category :
-                                             <?php foreach ($all_sub_cat as $item_scat){ ?>
-                                                  <?php echo $item_scat["sub_name"]; ?>,  
-                                             <?php }?>
+                                             <?php
+                                              /*-foreach ($all_sub_cat as $item_scat){ 
+                                                  echo $item_scat["sub_name"];
+                                              }*/ 
+                                              $sub_cats = get_subcategory($item->id); 
+                                              echo $sub_cats;
+                                             ?>
                                             </h5>
                                             <p class="">Current price :
                                                 <?php if($item->prev_price > 0){ ?>

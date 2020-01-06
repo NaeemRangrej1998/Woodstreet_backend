@@ -40,6 +40,7 @@ if(!empty($admin)){
 
         <?php require("common/php/sidebar.php"); ?>
 
+       
         <div class="main-content">
             <?php if($message) echo $message->format(); ?>
 
