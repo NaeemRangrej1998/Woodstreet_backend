@@ -40,24 +40,7 @@ if(!empty($admin)){
 
 			<div class="item">
 				<div class="item-inner">
-					<div class="item-content notification">
-						<form data-validation="true" action="../private/controllers/site_config.php" method="post" >
-
-							<label>AuthKey</label>
-							<div class="input-wrapper">
-
-                                <input type="hidden" name="id" value="<?php echo $site_configuration->id; ?>"/>
-                                <input type="hidden" name="admin_id" value="<?php echo $site_configuration->admin_id; ?>"/>
-
-								<textarea rows="4" cols="50" data-required="true"
-                                          placeholder="Firebase Auth key" name="firebase_auth"
-								   value="<?php echo $site_configuration->firebase_auth ?>"><?php echo $site_configuration->firebase_auth; ?></textarea>
-							</div>
-
-							<button type="submit" class="c-btn"><b>Update</b></button>
-
-						</form>
-					</div><!--item-content-->
+					
 				</div><!--item-inner-->
 			</div><!--item-->
 
