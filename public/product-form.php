@@ -87,7 +87,7 @@ if(!empty($admin)){
         $("#inventory").val('10');
 
         
-        alert($("#sub_cat").val()); 
+        // alert($("#sub_cat").val()); 
     });
 </script> 
 <div class="main-container">

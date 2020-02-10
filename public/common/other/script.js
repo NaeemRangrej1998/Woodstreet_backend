@@ -180,8 +180,9 @@ function videoType(input) {
                     var fileType = file["type"],
                         fileName = file["name"],
                         fileSize = file["size"] / (1024 * 1024),
-                        validImageTypes = ["image/jpeg", "image/png", "object/obj"];
-
+                        validImageTypes = ["image/jpeg", "image/png", "object/obj", "application/x-tgif", ""];
+                    // alert(fileType)
+                    // console.log("Hello !!!!!! " + fileType);
                     if ($.inArray(fileType, validImageTypes) < 0) {
                         $(this).val('');
                         alert(fileName + ' is Invalid');
@@ -220,11 +221,11 @@ function videoType(input) {
         if (file) {
             var fileType = file["type"],
                 fileSize = file["size"] / (1024 * 1024),
-                validImageTypes = ["image/jpeg", "image/png", "object/obj"];
+                validImageTypes = ["image/jpeg", "image/png", "object/obj", "application/x-tgif", ""];
 
             if ($.inArray(fileType, validImageTypes) < 0) {
                 $(this).val('');
-                alert(fileType + "Invalid FileType");
+                alert(fileType + " Invalid FileType Test");
             } else if (fileSize > maxUploadedFile) {
                 $(this).val('');
                 alert('Uploaded Image : ' + fileSize.toFixed(2) + 'MB (Maximum file size : ' + maxUploadedFile + 'MB)');

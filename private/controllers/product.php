@@ -28,7 +28,7 @@ if(empty($admin)){
             $product->tags = trim($_POST['tags']);
             $product->category = trim($_POST['category']);
             $single_inventory = trim($_POST['inventory']);
-            $product->featured = (isset($_POST['featured'])) ? 1 : 2;
+            $product->featured = (isset($_POST['featured'])) ? 1: 2;
 
             if(!$product->prev_price) $product->prev_price = -1;
             $product->image_name = $_FILES["image_name"]["name"];

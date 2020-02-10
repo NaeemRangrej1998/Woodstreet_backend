@@ -183,24 +183,35 @@ class Upload{
 
 
     private function error_message(){
-        if($this->upload_errors == 1)
+        if($this->upload_errors == 0){
+
+        }
+        else if($this->upload_errors == 1){
             $this->errors->add_error("The uploaded file exceeds the upload_max_filesize directive in php.ini.");
-        else if($this->upload_errors == 2)
+        }
+        else if($this->upload_errors == 2){
             $this->errors->add_error("The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.");
-        else if($this->upload_errors == 3)
+        }
+        else if($this->upload_errors == 3){
             $this->errors->add_error("The uploaded file was only partially uploaded.");
-        else if($this->upload_errors == 4)
+        }
+        else if($this->upload_errors == 4){
             $this->errors->add_error("No file was uploaded.");
-        else if($this->upload_errors == 6)
+        }
+        else if($this->upload_errors == 6){
             $this->errors->add_error("Missing a temporary folder.");
-        else if($this->upload_errors == 7)
+        }
+        else if($this->upload_errors == 7){
             $this->errors->add_error("Failed to write file to disk.");
-        else if($this->upload_errors == 8)
+        }
+        else if($this->upload_errors == 8){
             $this->errors->add_error("A PHP extension stopped the file upload. PHP does not provide a way to ascertain which extension 
             caused the file upload to stop; 
             examining the list of loaded extensions with phpinfo() may help.");
-        else
-            $this->errors->add_error("");
+        }
+        else{
+            $this->errors->add_error("Something went wrong ");
+        }
 
     }
 
