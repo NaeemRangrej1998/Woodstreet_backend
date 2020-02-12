@@ -136,7 +136,6 @@ if(!empty($admin)){
 									echo $errors->format();
 								}
 							}?>
-							
 						</form>
 					</div><!--item-content-->
 
